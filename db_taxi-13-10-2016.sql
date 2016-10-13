@@ -30,7 +30,7 @@ CREATE TABLE `bairro` (
   PRIMARY KEY (`id`),
   KEY `cidade_id` (`cidade_id`),
   CONSTRAINT `bairro_ibfk_1` FOREIGN KEY (`cidade_id`) REFERENCES `cidade` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `bairro` (
 
 LOCK TABLES `bairro` WRITE;
 /*!40000 ALTER TABLE `bairro` DISABLE KEYS */;
+INSERT INTO `bairro` VALUES (1,1,'Parque 10 de novembro','p10'),(2,1,'Aleixo','Al'),(3,1,'Adrianópolis','Ad'),(4,1,'Japiim','ja'),(5,1,'Alvorada','alv');
 /*!40000 ALTER TABLE `bairro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +60,7 @@ CREATE TABLE `carro` (
   PRIMARY KEY (`id`),
   KEY `categoria_carro_id` (`categoria_carro_id`),
   CONSTRAINT `carro_ibfk_1` FOREIGN KEY (`categoria_carro_id`) REFERENCES `categoria_carro` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +69,7 @@ CREATE TABLE `carro` (
 
 LOCK TABLES `carro` WRITE;
 /*!40000 ALTER TABLE `carro` DISABLE KEYS */;
+INSERT INTO `carro` VALUES (1,'OAA-2001','Vermelho','Corola','2016',3),(2,'OAA-2002','Vermelho','Honda Civic','2016',3),(3,'OAA-2003','Vermelho','Gol','2016',3),(4,'OAA-2004','Vermelho','Mercedes bens','2016',1);
 /*!40000 ALTER TABLE `carro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,12 +110,16 @@ CREATE TABLE `chamado` (
   `valor` float DEFAULT NULL,
   `cliente_id` int(9) DEFAULT NULL,
   `motorista_id` int(9) DEFAULT NULL,
+  `endereco_id` int(9) DEFAULT NULL,
+  `numero_local` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `motorista_id` (`motorista_id`),
+  KEY `endereco_id` (`endereco_id`),
   CONSTRAINT `chamado_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `pessoa` (`id`),
-  CONSTRAINT `chamado_ibfk_2` FOREIGN KEY (`motorista_id`) REFERENCES `motorista` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `chamado_ibfk_2` FOREIGN KEY (`motorista_id`) REFERENCES `motorista` (`id`),
+  CONSTRAINT `chamado_ibfk_3` FOREIGN KEY (`endereco_id`) REFERENCES `endereco` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,6 +128,7 @@ CREATE TABLE `chamado` (
 
 LOCK TABLES `chamado` WRITE;
 /*!40000 ALTER TABLE `chamado` DISABLE KEYS */;
+INSERT INTO `chamado` VALUES (2,'2016-10-13 17:43:58',100,4,3,1,'22'),(3,'2016-10-13 17:44:52',100,10,3,1,'22'),(4,'2016-10-13 17:45:08',100,10,4,1,'22');
 /*!40000 ALTER TABLE `chamado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +147,7 @@ CREATE TABLE `cidade` (
   PRIMARY KEY (`id`),
   KEY `estado_id` (`estado_id`),
   CONSTRAINT `cidade_ibfk_1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,6 +156,7 @@ CREATE TABLE `cidade` (
 
 LOCK TABLES `cidade` WRITE;
 /*!40000 ALTER TABLE `cidade` DISABLE KEYS */;
+INSERT INTO `cidade` VALUES (1,1,'Manaus','MA');
 /*!40000 ALTER TABLE `cidade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +176,7 @@ CREATE TABLE `endereco` (
   PRIMARY KEY (`id`),
   KEY `bairro_id` (`bairro_id`),
   CONSTRAINT `endereco_ibfk_1` FOREIGN KEY (`bairro_id`) REFERENCES `bairro` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,6 +185,7 @@ CREATE TABLE `endereco` (
 
 LOCK TABLES `endereco` WRITE;
 /*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
+INSERT INTO `endereco` VALUES (1,1,'Rua 8','Conjunto Castelo Branco','69055260'),(2,1,'Rua 9','Conjunto Castelo Branco','69055261'),(3,1,'Rua 10','Conjunto Castelo Branco','69055262'),(4,2,'Rua Aleixo','Conjunto Aleixo','69055263'),(5,2,'Av. Professor Armando Armound','Conjunto Aleixo','69055264');
 /*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,7 +204,7 @@ CREATE TABLE `estado` (
   PRIMARY KEY (`id`),
   KEY `pais_id` (`pais_id`),
   CONSTRAINT `estado_ibfk_1` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,6 +213,7 @@ CREATE TABLE `estado` (
 
 LOCK TABLES `estado` WRITE;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
+INSERT INTO `estado` VALUES (1,1,'Amazonas','AM');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +228,7 @@ CREATE TABLE `idioma` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `idioma` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,6 +237,7 @@ CREATE TABLE `idioma` (
 
 LOCK TABLES `idioma` WRITE;
 /*!40000 ALTER TABLE `idioma` DISABLE KEYS */;
+INSERT INTO `idioma` VALUES (1,'Português'),(2,'Inglês'),(3,'Espanhol'),(4,'Mandarim'),(5,'Francês'),(6,'Alemão'),(7,'Italiano');
 /*!40000 ALTER TABLE `idioma` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +258,7 @@ CREATE TABLE `motorista` (
   KEY `carro_id` (`carro_id`),
   CONSTRAINT `motorista_ibfk_1` FOREIGN KEY (`pessoa_id`) REFERENCES `pessoa` (`id`),
   CONSTRAINT `motorista_ibfk_2` FOREIGN KEY (`carro_id`) REFERENCES `carro` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,6 +267,7 @@ CREATE TABLE `motorista` (
 
 LOCK TABLES `motorista` WRITE;
 /*!40000 ALTER TABLE `motorista` DISABLE KEYS */;
+INSERT INTO `motorista` VALUES (3,'001',5,1),(4,'002',6,1);
 /*!40000 ALTER TABLE `motorista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +287,7 @@ CREATE TABLE `motorista_idioma` (
   KEY `motorista_id` (`motorista_id`),
   CONSTRAINT `motorista_idioma_ibfk_1` FOREIGN KEY (`idioma_id`) REFERENCES `idioma` (`id`),
   CONSTRAINT `motorista_idioma_ibfk_2` FOREIGN KEY (`motorista_id`) REFERENCES `motorista` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,30 +296,8 @@ CREATE TABLE `motorista_idioma` (
 
 LOCK TABLES `motorista_idioma` WRITE;
 /*!40000 ALTER TABLE `motorista_idioma` DISABLE KEYS */;
+INSERT INTO `motorista_idioma` VALUES (6,1,3),(7,2,3),(8,1,4),(9,2,4),(10,3,4);
 /*!40000 ALTER TABLE `motorista_idioma` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `numero_casa`
---
-
-DROP TABLE IF EXISTS `numero_casa`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `numero_casa` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
-  `numero` varchar(14) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `numero_casa`
---
-
-LOCK TABLES `numero_casa` WRITE;
-/*!40000 ALTER TABLE `numero_casa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `numero_casa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -321,13 +311,16 @@ CREATE TABLE `ocorrencia` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `ocorrencia` text,
   `tipo_ocorrencia_id` int(9) DEFAULT NULL,
-  `chamado_id` int(9) DEFAULT NULL,
+  `cliente_id` int(9) DEFAULT NULL,
+  `motorista_id` int(9) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tipo_ocorrencia_id` (`tipo_ocorrencia_id`),
-  KEY `chamado_id` (`chamado_id`),
+  KEY `cliente_id` (`cliente_id`),
+  KEY `motorista_id` (`motorista_id`),
   CONSTRAINT `ocorrencia_ibfk_1` FOREIGN KEY (`tipo_ocorrencia_id`) REFERENCES `tipo_ocorrencia` (`id`),
-  CONSTRAINT `ocorrencia_ibfk_2` FOREIGN KEY (`chamado_id`) REFERENCES `chamado` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `ocorrencia_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `pessoa` (`id`),
+  CONSTRAINT `ocorrencia_ibfk_3` FOREIGN KEY (`motorista_id`) REFERENCES `motorista` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,6 +329,7 @@ CREATE TABLE `ocorrencia` (
 
 LOCK TABLES `ocorrencia` WRITE;
 /*!40000 ALTER TABLE `ocorrencia` DISABLE KEYS */;
+INSERT INTO `ocorrencia` VALUES (1,'Roubaram meu carro',2,NULL,3),(2,'Roubaram meu carro',2,NULL,4),(3,'Esqueci minha carteira no carro',2,10,NULL);
 /*!40000 ALTER TABLE `ocorrencia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +345,7 @@ CREATE TABLE `pais` (
   `pais` varchar(30) NOT NULL,
   `sigla` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,6 +354,7 @@ CREATE TABLE `pais` (
 
 LOCK TABLES `pais` WRITE;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
+INSERT INTO `pais` VALUES (1,'Brasil','BR');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,10 +370,9 @@ CREATE TABLE `pessoa` (
   `nome` varchar(50) NOT NULL,
   `cpf` varchar(20) DEFAULT NULL,
   `endereco_id` int(9) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `endereco_id` (`endereco_id`),
-  CONSTRAINT `pessoa_ibfk_1` FOREIGN KEY (`endereco_id`) REFERENCES `endereco` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `numero_casa` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,6 +381,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
+INSERT INTO `pessoa` VALUES (4,'Hugo Martins de Lima','918.826.052-68',1,'23'),(5,'Marcelo Silva','918.826.052-69',2,'24'),(6,'Marcel Gomes','918.826.052-70',3,'25'),(7,'Diana Gomes','918.826.052-71',4,'26'),(8,'Livia Andrade','918.826.052-72',5,'27'),(9,'Isabella Martins Andrade','918.826.052-74',1,'28'),(10,'César Henrique','918.826.052-75',2,'29');
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,7 +402,7 @@ CREATE TABLE `telefone` (
   KEY `tipo_telefone_id` (`tipo_telefone_id`),
   CONSTRAINT `telefone_ibfk_1` FOREIGN KEY (`pessoa_id`) REFERENCES `pessoa` (`id`),
   CONSTRAINT `telefone_ibfk_2` FOREIGN KEY (`tipo_telefone_id`) REFERENCES `tipo_telefone` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,6 +411,7 @@ CREATE TABLE `telefone` (
 
 LOCK TABLES `telefone` WRITE;
 /*!40000 ALTER TABLE `telefone` DISABLE KEYS */;
+INSERT INTO `telefone` VALUES (1,'993346242',5,1),(2,'993343212',6,1);
 /*!40000 ALTER TABLE `telefone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -454,7 +450,7 @@ CREATE TABLE `tipo_telefone` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `tipo_telefone` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -476,4 +472,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-24 14:52:39
+-- Dump completed on 2016-10-13 17:49:53
